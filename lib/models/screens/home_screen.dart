@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:loja_de_ladrilhos/models/cart_model.dart';
 import 'package:loja_de_ladrilhos/models/product_model.dart';
-import 'package:loja_de_ladrilhos/models/screens/product_detail_screen.dart';
-import 'package:loja_de_ladrilhos/models/screens/cart_screen.dart';
-import 'package:loja_de_ladrilhos/models/screens/about_screen.dart';
+import 'product_detail_screen.dart';
+import 'cart_screen.dart';
+import 'about_screen.dart';
+import 'contact_screen.dart';
 import 'package:intl/intl.dart';
 
 enum MenuOptions { about, contact }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,34 +29,17 @@ class HomeScreen extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.shopping_cart),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const CartScreen()),
-                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen()));
                     },
                   ),
                   if (cart.itemCount > 0)
                     Positioned(
-                      right: 8,
-                      top: 8,
+                      right: 8, top: 8,
                       child: Container(
                         padding: const EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        constraints: const BoxConstraints(
-                          minWidth: 16,
-                          minHeight: 16,
-                        ),
-                        child: Text(
-                          cart.itemCount.toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                        decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(10)),
+                        constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                        child: Text(cart.itemCount.toString(), style: const TextStyle(color: Colors.white, fontSize: 10), textAlign: TextAlign.center),
                       ),
                     ),
                 ],
@@ -66,28 +50,16 @@ class HomeScreen extends StatelessWidget {
             onSelected: (MenuOptions result) {
               switch (result) {
                 case MenuOptions.about:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AboutScreen()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
                   break;
                 case MenuOptions.contact:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ContactScreen()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactScreen()));
                   break;
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuOptions>>[
-              const PopupMenuItem<MenuOptions>(
-                value: MenuOptions.about,
-                child: Text('Sobre a Empresa'),
-              ),
-              const PopupMenuItem<MenuOptions>(
-                value: MenuOptions.contact,
-                child: Text('Contato'),
-              ),
+              const PopupMenuItem<MenuOptions>(value: MenuOptions.about, child: Text('Sobre a Empresa')),
+              const PopupMenuItem<MenuOptions>(value: MenuOptions.contact, child: Text('Contato')),
             ],
           ),
         ],
@@ -95,44 +67,15 @@ class HomeScreen extends StatelessWidget {
       body: GridView.builder(
         padding: const EdgeInsets.all(10.0),
         itemCount: productList.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.75,
-          crossAxisSpacing: 10.0,
-          mainAxisSpacing: 10.0,
-        ),
-        itemBuilder: (ctx, i) => ProductCard(
-          product: productList[i],
-          formatCurrency: formatCurrency,
-        ),
-      ),
-    );
-  }
-}
-
-class ContactScreen extends StatelessWidget {
-  const ContactScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contato'),
-      ),
-      body: const Center(
-        child: Text('Página de Contato'),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.75, crossAxisSpacing: 10.0, mainAxisSpacing: 10.0),
+        itemBuilder: (ctx, i) => ProductCard(product: productList[i], formatCurrency: formatCurrency),
       ),
     );
   }
 }
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-    required this.product,
-    required this.formatCurrency,
-  });
-
+  const ProductCard({Key? key, required this.product, required this.formatCurrency}) : super(key: key);
   final Product product;
   final NumberFormat formatCurrency;
 
@@ -146,25 +89,12 @@ class ProductCard extends StatelessWidget {
           GridTile(
             footer: GridTileBar(
               backgroundColor: Colors.black54,
-              title: Text(
-                product.name,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12),
-              ),
-              subtitle: Text(
-                formatCurrency.format(product.price),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+              title: Text(product.name, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
+              subtitle: Text(formatCurrency.format(product.price), textAlign: TextAlign.center, style: const TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.bold)),
             ),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProductDetailScreen(product: product),
-                  ),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailScreen(product: product)));
               },
               child: Hero(
                 tag: product.id,
@@ -172,38 +102,16 @@ class ProductCard extends StatelessWidget {
                   product.imageAsset,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: Colors.blue[100],
-                      child: Center(
-                        child: Icon(
-                          Icons.image_not_supported,
-                          color: Colors.blue[300],
-                          size: 50,
-                        ),
-                      ),
-                    );
+                    return Container(color: Colors.blue[100], child: Center(child: Icon(Icons.image_not_supported, color: Colors.blue[300], size: 50)));
                   },
                 ),
               ),
             ),
           ),
-          // NOVO: Overlay para produtos esgotados
           if (product.stock == 0)
             Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Center(
-                child: Text(
-                  'ESGOTADO',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
+              decoration: BoxDecoration(color: Colors.black.withOpacity(0.5), borderRadius: BorderRadius.circular(10)),
+              child: const Center(child: Text('ESGOTADO', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18))),
             ),
         ],
       ),

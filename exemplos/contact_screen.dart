@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatelessWidget {
-  const ContactScreen({Key? key}) : super(key: key);
+  const ContactScreen({super.key});
 
+  // Função para abrir links
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
@@ -28,7 +29,10 @@ class ContactScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           const Center(
-            child: Text('Entre em Contato', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            child: Text(
+              'Entre em Contato',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
           ),
           const SizedBox(height: 30),
           Card(
@@ -55,7 +59,9 @@ class ContactScreen extends StatelessWidget {
               leading: const Icon(Icons.location_on, color: Colors.blue),
               title: const Text('Endereço'),
               subtitle: const Text('Rua dos Ladrilhos, 123 - Centro'),
-              onTap: () {},
+              onTap: () {
+                // Adicionar link para o mapa se desejar
+              },
             ),
           ),
         ],
