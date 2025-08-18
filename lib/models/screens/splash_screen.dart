@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Icon(Icons.grid_on, size: 100, color: Colors.white),
             const SizedBox(height: 20),
             const Text(
-              'Loja de Ladrilhos',
+              'Ladrilhos da Roça',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
