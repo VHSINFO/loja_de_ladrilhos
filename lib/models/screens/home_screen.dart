@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 enum MenuOptions { about, contact }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({Key? key, required this.product, required this.formatCurrency}) : super(key: key);
+  const ProductCard({super.key, required this.product, required this.formatCurrency});
   final Product product;
   final NumberFormat formatCurrency;
 
